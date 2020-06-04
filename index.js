@@ -58,13 +58,11 @@ function counter2() {
 
 Write a function called `inning` that generates a random number 
 of points that a team scored in an inning. This should be a whole number between 0 and 2. */
-
-function inning(/*Code Here*/){
-
-    /*Code Here*/
-
+function inning(){
+  let score = Math.floor(3 * Math.random());
+  return score;
 }
-
+console.log(inning());
 /* Task 3: finalScore()
 
 Write a higher order function called `finalScore` that accepts the callback function `inning` (from above) and a number of innings and and returns the final score of the game in the form of an object.
@@ -79,12 +77,18 @@ finalScore(inning, 9) might return:
 
 */ 
 
-function finalScore(/*code Here*/){
-
-  /*Code Here*/
-
+function finalScore(inningPoints,innings){
+let finalScore = {
+"Home" : 0,
+"Away" : 0,
 }
-
+for (i=0; i<innings;i++){
+  finalScore ["Home"] += inningPoints();
+  finalScore ["Away"] += inningPoints();
+}
+return finalScore;
+}
+console.log(finalScore(inning,9));
 /* Task 4: 
 
 Create a function called `scoreboard` that accepts the following parameters: 
@@ -106,8 +110,24 @@ and returns the score at each pont in the game, like so:
 
 Final Score: 6 - 10 */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function scoreboard(inningPoints,innings) {
+  let scoreboard ={
+    "Home":{},
+    "Away":{},
+  }
+  for (i=0;i<innings;i++) {
+    scoreboard["home"][`inning ${i+1}`] = inningPoints() + (scoreboard["home"][`inning ${i}`] || 0);
+    scoreboard["away"][`inning ${i+1}`] = inningPoints() + (scoreboard["away"][`inning ${i}`] || 0);
+  }
+
+  scoreboard["home"]["final score"] = scoreboard["home"][`inning ${innings}`];
+  scoreboard["away"]["final score"] = scoreboard["away"][`inning ${innings}`];
+
+  return scoreboard;
+
 }
+console.table(scoreboard(inning,9));
+
+
 
 

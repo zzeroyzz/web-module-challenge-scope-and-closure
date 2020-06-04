@@ -27,22 +27,24 @@ function processFirstItem(stringList, callback) {
  * Study the code for counter1 and counter2. Answer the questions below.
  * 
  * 1. What is the difference between counter1 and counter2?
- * 
+ * counter1 has a return function count with the function so it saves the information from the previous loop, counter2 does not have a variable to call the function on to keep the count consistent, also the variavle "let count" is on the global scale so it could cause problems later in your code.
  * 2. Which of the two uses a closure? How can you tell?
- * 
+ * counter1 because the outside variable can be called on by the inside of the function. 
+ *  
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
- *
+ * counter1 would be used if you wanted your function to maintain the memory of the counts and if we wanted to have our counts be determined by different values
+ * counter2 would be useful if you would only want a counter as a function and that's it
 */
 
 // counter1 code
+//global scope
+const counter1 = counterMaker();
 function counterMaker() {
   let count = 0;
   return function counter() {
    return count++;
   }
 }
-
-const counter1 = counterMaker();
 
 // counter2 code
 let count = 0;
@@ -54,7 +56,8 @@ function counter2() {
 
 /* Task 2: inning() 
 
-Write a function called `inning` that generates a random number of points that a team scored in an inning. This should be a whole number between 0 and 2. */
+Write a function called `inning` that generates a random number 
+of points that a team scored in an inning. This should be a whole number between 0 and 2. */
 
 function inning(/*Code Here*/){
 

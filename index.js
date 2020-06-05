@@ -110,24 +110,89 @@ and returns the score at each pont in the game, like so:
 
 Final Score: 6 - 10 */
 
-function scoreboard(inningPoints,innings) {
-  let scoreboard ={
-    "Home":{},
-    "Away":{},
-  }
-  for (i=0;i<innings;i++) {
-    scoreboard["home"][`inning ${i+1}`] = inningPoints() + (scoreboard["home"][`inning ${i}`] || 0);
-    scoreboard["away"][`inning ${i+1}`] = inningPoints() + (scoreboard["away"][`inning ${i}`] || 0);
-  }
+/* Task 2: inning() 
 
-  scoreboard["home"]["final score"] = scoreboard["home"][`inning ${innings}`];
-  scoreboard["away"]["final score"] = scoreboard["away"][`inning ${innings}`];
-
-  return scoreboard;
-
+Write a function called `inning` that generates a random number 
+of points that a team scored in an inning. This should be a whole number between 0 and 2. */
+function inning(){
+  let score = Math.floor(3 * Math.random());
+  return score;
 }
-console.table(scoreboard(inning,9));
+console.log(inning());
+/* Task 3: finalScore()
 
+Write a higher order function called `finalScore` that accepts the callback function `inning` (from above) and a number of innings and and returns the final score of the game in the form of an object.
 
+For example, 
 
+finalScore(inning, 9) might return: 
+{
+  "Home": 11,
+  "Away": 5,
+}
+
+*/ 
+
+function finalScore(inningPoints,innings){
+let finalScore = {
+"Home" : 0,
+"Away" : 0,
+}
+for (i=0; i<innings;i++){
+  finalScore ["Home"] += inningPoints();
+  finalScore ["Away"] += inningPoints();
+}
+return finalScore;
+}
+console.log(finalScore(inning,9));
+/* Task 4: 
+
+Create a function called `scoreboard` that accepts the following parameters: 
+
+(1) Callback function `inning` that you wrote above
+(2) A number of innings
+
+and returns the score at each pont in the game, like so:
+
+1st inning: 0 - 2
+2nd inning: 1 - 3
+3rd inning: 1 - 3
+4th inning: 2 - 4
+5th inning: 4 - 6
+6th inning: 4 - 6
+7th inning: 4 - 6
+8th inning: 5 - 8
+9th inning: 6 - 10
+
+Final Score: 6 - 10 */
+
+function scoreboard(inningPoints,innings) {
+ let score = {
+    "Home": 0,
+    "Away": 0
+  }
+  let board = "";
+  for(let i = 1; i <= innings; i++){
+    score.Home += inning();
+    score.Away += inning();
+    if (i === 1){
+      board += "1st ";
+    }
+    else if (i === 2){
+      board += "2nd ";
+    }
+    else if (i === 3){
+      board += "3rd ";
+    }
+    else{
+      board += String(i) + "th ";
+    }
+    board += `inning: ${score.Home} - ${score.Away}\n`
+  }
+  if(innings >= 9){
+    board += `\nFinal Score: ${score.Home} - ${score.Away}`;
+  }
+  return board;
+}
+console.log(scoreboard(inning, 9));
 
